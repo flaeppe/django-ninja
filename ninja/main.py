@@ -23,7 +23,7 @@ from ninja.openapi.urls import get_openapi_urls, get_root_url
 from ninja.parser import Parser
 from ninja.renderers import BaseRenderer, JSONRenderer
 from ninja.router import Router
-from ninja.types import TCallable
+from ninja.types import DictStrAny, TCallable
 from ninja.utils import is_debug_server, normalize_path
 
 if TYPE_CHECKING:
@@ -50,7 +50,7 @@ class NinjaAPI:
         description: str = "",
         openapi_url: Optional[str] = "/openapi.json",
         docs_url: Optional[str] = "/docs",
-        servers: Optional[List[Dict[str, Union[str, Any]]]] = None,
+        servers: Optional[List[DictStrAny]] = None,
         docs_decorator: Optional[Callable[[TCallable], TCallable]] = None,
         urls_namespace: Optional[str] = None,
         csrf: bool = False,
@@ -80,7 +80,7 @@ class NinjaAPI:
         self.description = description
         self.openapi_url = openapi_url
         self.docs_url = docs_url
-        self.servers = servers
+        self.servers = servers or []
         self.docs_decorator = docs_decorator
         self.urls_namespace = urls_namespace or f"api-{self.version}"
         self.csrf = csrf
